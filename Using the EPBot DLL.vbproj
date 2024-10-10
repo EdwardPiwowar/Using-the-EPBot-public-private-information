@@ -4,7 +4,12 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Using_the_EPBot_DLL</RootNamespace>
     <TargetFramework>net8.0</TargetFramework>
+    <ApplicationIcon>Ikona256.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Ikona256.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="EPBot86">

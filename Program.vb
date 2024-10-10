@@ -2,7 +2,6 @@ Imports System
 ''EPBot is a namespace 
 Module Program
 
-
     Sub Main(args As String())
         Dim k As Integer, position As Integer, dealer As Integer, vulnerability As Integer, new_bid As Integer
         Dim str_hand As String
@@ -14,18 +13,27 @@ Module Program
         ''Dim Player(3) As EPBot64.EPBot
         ''Dim Player(3) As EPBotARM64.EPBot
         Dim arr_bids() As String
+        Dim arr_leads() As String
+        Dim arr_leaders() As Integer
         Dim arr_suits() As String
         ReDim hand(3)
         ReDim suits(3)
+
         For k = 0 To 3
             ReDim hand(k).suit(3)
         Next
 
-
+        set_board()
+        set_dealers()
+        set_vulnerability()
+        set_strain_mark()
 
         '---example hand
         str_hand = "Q.K6.AQT6.KQT852 T642.Q982.842.73 AK85.T5.J975.AJ6 J973.AJ743.K3.94"
-        Console.WriteLine("Example hand: " & str_hand)
+
+        Console.WriteLine("Enter hand")
+        str_hand = Console.ReadLine()
+        Console.WriteLine("Entered hand: " & str_hand)
 
         blocks = Split(str_hand, " ")
         For k = 0 To 3
@@ -53,10 +61,6 @@ Module Program
         Console.WriteLine("")
 
 
-        set_board()
-        set_dealers()
-        set_vulnerability()
-        set_strain_mark()
 
         '---example
         position = C_NORTH
@@ -74,11 +78,15 @@ Module Program
             .new_hand(position, hand(position).suit, dealer, vulnerability)
             .scoring = 0
 
-
-            Console.WriteLine(vbTab & vbTab & "P" & vbTab & "1D")
-            Console.WriteLine("1H" & vbTab & "3C" & vbTab & "P" & vbTab & "3H")
-            Console.WriteLine("P" & vbTab & "4N" & vbTab & "P" & vbTab & "5H")
-            Console.WriteLine("P" & vbTab & "?")
+            Console.WriteLine("W	N	E	S
+		P	1D
+1H	2H*1	3H	4D
+P	4H*2	X	4S*3
+P	5D	P	P
+P
+*1 limit raise or better in !D
+*2 Cue bid, a !H stopper
+*3 Cue bid, a !S stopper")
 
 
             ReDim arr_bids(63)
@@ -89,9 +97,9 @@ Module Program
             arr_bids(4) = "17"
             arr_bids(5) = "21"
             arr_bids(6) = "00"
-            arr_bids(7) = "22"
+            arr_bids(7) = "22*Cue bid, a !H stopper"
             arr_bids(8) = "01"
-            arr_bids(9) = "23"
+            arr_bids(9) = "23Cue bid, a !S stopper"
             arr_bids(10) = "00"
             arr_bids(11) = "26"
             arr_bids(12) = "00"
@@ -101,6 +109,8 @@ Module Program
 
 
             ''getting all hands after bidding and during play
+            ReDim arr_leads(63)
+            ReDim arr_leaders(51)
             For k = 0 To 3
                 Console.WriteLine("")
                 Console.WriteLine("Player cards visible from position: " & CStr(k))
@@ -111,7 +121,9 @@ Module Program
                 ''optional set dummy
                 .set_dummy(2, hand(2).suit)
                 ''optional set leads
-                '.set_arr_leads
+                arr_leaders(0) = 3
+                arr_leads(0) = "AH"
+                .set_arr_leads(arr_leaders, arr_leads)
                 ''
                 new_bid = .get_bid
                 ''
