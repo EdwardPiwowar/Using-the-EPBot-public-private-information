@@ -1,4 +1,9 @@
-﻿Module ModuleBBA
+﻿Imports System.Diagnostics.Eventing
+Imports System.Runtime.InteropServices.JavaScript.JSType
+
+Module ModuleBBA
+    Private i As Integer, j As Integer, k As Integer, vulnerable As Integer, number As Integer, encryption_byte As Integer, board_extension As Integer
+    Private str_card As String, str_number As String
     Public Const C_PASS As Integer = 0
     Public Const C_CLUBS As Integer = 0
     Public Const C_DIAMONDS As Integer = 1
@@ -20,13 +25,16 @@
     Public Const F_MAX_HCP As Integer = 103
     Public Const F_MIN_PKT As Integer = 104
     Public Const F_MAX_PKT As Integer = 105
+    Public deal As Integer, dealer As Integer
     Public board(0 To 3, 0 To 3) As Integer
     Public dealers(0 To 15) As Integer
     Public vulnerability(15) As Integer
     Public strain_mark(5) As String
+    Private lbloki(3) As Integer
     Public Structure TYPE_HAND
         Dim suit() As String
     End Structure
+    Public hand() As TYPE_HAND
 
     Public Sub set_board()
         '---standard number of a board
@@ -84,11 +92,31 @@
     End Sub
 
 
-
-
-
-
-
+    Public Sub set_hand(BBA_NUMBER As String)
+        str_number = Left$(BBA_NUMBER, 1)
+        board_extension = CLng("&H" & str_number)
+        str_number = Mid$(BBA_NUMBER, 2, 1)
+        number = CLng("&H" & str_number)
+        dealer = number \ 4
+        vulnerable = number Mod 4
+        deal = board_extension * 16 + board(dealer, vulnerable)
+        encryption_byte = board(dealer, vulnerable)
+        For j = 1 To 13
+            str_card = Mid$(C_LONGER, j, 1)
+            str_number = Mid$(BBA_NUMBER, 2 * j + 1, 2)
+            '---0-15
+            number = CLng("&H" & str_number)
+            number = encryption_byte Xor number
+            lbloki(0) = number Mod 4
+            lbloki(1) = (number \ 4) Mod 4
+            lbloki(2) = (number \ 16) Mod 4
+            lbloki(3) = number \ 64
+            For i = 0 To 3
+                k = lbloki(i)
+                hand(k).suit(i) = hand(k).suit(i) & str_card
+            Next i
+        Next j
+    End Sub
 
 
 End Module

@@ -3,12 +3,11 @@ Imports System
 Module Program
 
     Sub Main(args As String())
-        Dim k As Integer, position As Integer, dealer As Integer, vulnerability As Integer, new_bid As Integer
-        Dim str_hand As String
+        Dim k As Integer, position As Integer, vulnerability As Integer, new_bid As Integer
+        Dim str_hand As String, entered_hand As String
         Dim blocks() As String
         Dim subblocks() As String
         Dim suits()() As String
-        Dim hand() As TYPE_HAND
         Dim Player(3) As EPBot86.EPBot
         ''Dim Player(3) As EPBot64.EPBot
         ''Dim Player(3) As EPBotARM64.EPBot
@@ -29,19 +28,16 @@ Module Program
         set_strain_mark()
 
         '---example hand
-        str_hand = "Q.K6.AQT6.KQT852 T642.Q982.842.73 AK85.T5.J975.AJ6 J973.AJ743.K3.94"
-
-        Console.WriteLine("Enter hand")
-        str_hand = Console.ReadLine()
+        str_hand = "01BB8519F369D29DF04BA17EF45D"
+        Console.WriteLine("Enter another hand or skip")
+        entered_hand = Console.ReadLine()
         Console.WriteLine("Entered hand: " & str_hand)
 
-        blocks = Split(str_hand, " ")
-        For k = 0 To 3
-            subblocks = Split(blocks(k), ".")
-            For i = 0 To 3
-                hand(k).suit(i) = subblocks(3 - i)
-            Next i
-        Next k
+        If Len(entered_hand) = 28 Then
+            str_hand = entered_hand
+        End If
+
+        set_hand(str_hand)
 
         Console.WriteLine("")
         Console.WriteLine("Entered hands:")
