@@ -79,6 +79,7 @@ Module Program
         bid()
         Console.WriteLine(bidding_body)
 
+
         Console.WriteLine("")
         Console.WriteLine("Declarer = " & CStr(declarer))
         Console.WriteLine("Leader = " & CStr(leader))
