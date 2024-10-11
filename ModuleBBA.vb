@@ -40,7 +40,6 @@ Module ModuleBBA
         Dim suit() As String
     End Structure
     Public hand() As TYPE_HAND
-
     Public Sub set_board()
         '---standard number of a board
         board(C_NORTH, C_NONE) = 1
