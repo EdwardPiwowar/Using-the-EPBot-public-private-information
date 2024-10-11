@@ -77,6 +77,7 @@ Module Program
         Next k
 
         bid()
+        ''to do
         Console.WriteLine(bidding_body)
 
 
