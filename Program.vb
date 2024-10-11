@@ -1,26 +1,30 @@
 Imports System
-''EPBot is a namespace 
-Module Program
+Imports System.Runtime.CompilerServices
 
+Module Program
     Sub Main(args As String())
-        Dim k As Integer, position As Integer, vulnerability As Integer, new_bid As Integer
+        Dim k As Integer, position As Integer, new_bid As Integer
         Dim str_hand As String, entered_hand As String
-        Dim blocks() As String
-        Dim subblocks() As String
         Dim suits()() As String
-        Dim Player(3) As EPBot86.EPBot
-        ''Dim Player(3) As EPBot64.EPBot
-        ''Dim Player(3) As EPBotARM64.EPBot
-        Dim arr_bids() As String
+
+
         Dim arr_leads() As String
         Dim arr_leaders() As Integer
         Dim arr_suits() As String
         ReDim hand(3)
         ReDim suits(3)
+        ReDim arr_bids(63)
+        ReDim arr_leads(63)
+        ReDim arr_leaders(51)
 
         For k = 0 To 3
             ReDim hand(k).suit(3)
         Next
+        For k = 0 To 3
+            Player(k) = New EPBot86.EPBot
+            'Player(k) = New EPBot64.EPBot
+            'Player(k) = New EPBotARM64.EPBot
+        Next k
 
         set_board()
         set_dealers()
@@ -54,71 +58,45 @@ Module Program
         For i = C_SPADES To C_CLUBS Step -1
             Console.WriteLine(vbTab + hand(2).suit(i))
         Next i
+
         Console.WriteLine("")
-
-
-
-        '---example
-        position = C_NORTH
-        dealer = C_EAST
-        vulnerability = 1
-
-
+        Console.WriteLine("Deal = " & CStr(deal))
+        Console.WriteLine("Dealer = " & CStr(dealer))
+        Console.WriteLine("Vulnerable = " & CStr(vulnerable))
+        Console.WriteLine("")
+        ''hands
         For k = 0 To 3
-            Player(k) = New EPBot86.EPBot
-            'Player(k) = New EPBot64.EPBot
-            'Player(k) = New EPBotARM64.EPBot
+            Player(k).new_hand(k, hand(k).suit, dealer, vulnerable)
+            Player(k).scoring = 0
+            ''examples for team 1 NS
+            Player(k).system_type(0) = 0
+            Player(k).conventions(0, "Cue bid") = 1
+            ''examples for team 2 WE
+            Player(k).system_type(1) = 0
+            Player(k).conventions(1, "Cue bid") = 1
         Next k
 
+        bid()
+        Console.WriteLine(bidding_body)
+
+        Console.WriteLine("")
+        Console.WriteLine("Declarer = " & CStr(declarer))
+        Console.WriteLine("Leader = " & CStr(leader))
+        Console.WriteLine("Dummy = " & CStr(dummy))
+        Console.WriteLine("")
         With Player(position)
-            .new_hand(position, hand(position).suit, dealer, vulnerability)
-            .scoring = 0
-
-            Console.WriteLine("W	N	E	S
-		P	1D
-1H	2H*1	3H	4D
-P	4H*2	X	4S*3
-P	5D	P	P
-P
-*1 limit raise or better in !D
-*2 Cue bid, a !H stopper
-*3 Cue bid, a !S stopper")
-
-
-            ReDim arr_bids(63)
-            arr_bids(0) = "00"
-            arr_bids(1) = "06"
-            arr_bids(2) = "07"
-            arr_bids(3) = "12*limit raise or better in !D"
-            arr_bids(4) = "17"
-            arr_bids(5) = "21"
-            arr_bids(6) = "00"
-            arr_bids(7) = "22*Cue bid, a !H stopper"
-            arr_bids(8) = "01"
-            arr_bids(9) = "23Cue bid, a !S stopper"
-            arr_bids(10) = "00"
-            arr_bids(11) = "26"
-            arr_bids(12) = "00"
-            arr_bids(13) = "00"
-            arr_bids(14) = "00"
-
-
-
-            ''getting all hands after bidding and during play
-            ReDim arr_leads(63)
-            ReDim arr_leaders(51)
             For k = 0 To 3
                 Console.WriteLine("")
                 Console.WriteLine("Player cards visible from position: " & CStr(k))
                 'set hand
-                .new_hand(k, hand(k).suit, dealer, vulnerability)
+                .new_hand(k, hand(k).suit, dealer, vulnerable)
                 ''set the entire auction
                 .set_arr_bids(arr_bids)
                 ''optional set dummy
-                .set_dummy(2, hand(2).suit)
+                .set_dummy(dummy, hand(dummy).suit)
                 ''optional set leads
-                arr_leaders(0) = 3
-                arr_leads(0) = "AH"
+                arr_leaders(0) = leader
+                ''arr_leads(0) = "TS"
                 .set_arr_leads(arr_leaders, arr_leads)
                 ''
                 new_bid = .get_bid

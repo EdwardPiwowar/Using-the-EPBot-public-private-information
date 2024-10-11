@@ -1,8 +1,9 @@
 ﻿Imports System.Diagnostics.Eventing
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices.JavaScript.JSType
 
 Module ModuleBBA
-    Private i As Integer, j As Integer, k As Integer, vulnerable As Integer, number As Integer, encryption_byte As Integer, board_extension As Integer
+    Private i As Integer, j As Integer, k As Integer, number As Integer, encryption_byte As Integer, board_extension As Integer
     Private str_card As String, str_number As String
     Public Const C_PASS As Integer = 0
     Public Const C_CLUBS As Integer = 0
@@ -20,17 +21,21 @@ Module ModuleBBA
     Public Const C_BOTH As Integer = 3
     Public Const C_FIVE As Integer = 5
     Public Const C_LONGER As String = "AKQJT98765432"
-    Public Const C_INTERPRETED As Long = 13
+    Public Const C_INTERPRETED As Integer = 13
     Public Const F_MIN_HCP As Integer = 102
     Public Const F_MAX_HCP As Integer = 103
     Public Const F_MIN_PKT As Integer = 104
     Public Const F_MAX_PKT As Integer = 105
-    Public deal As Integer, dealer As Integer
+    Public deal As Integer, dealer As Integer, vulnerable As Integer, last_bid As Integer
     Public board(0 To 3, 0 To 3) As Integer
     Public dealers(0 To 15) As Integer
     Public vulnerability(15) As Integer
     Public strain_mark(5) As String
     Private lbloki(3) As Integer
+    ''EPBot is a namespace 
+    Public Player(3) As EPBot86.EPBot
+    ''Dim Player(3) As EPBot64.EPBot
+    ''Dim Player(3) As EPBotARM64.EPBot
     Public Structure TYPE_HAND
         Dim suit() As String
     End Structure
@@ -90,7 +95,19 @@ Module ModuleBBA
         strain_mark(C_NT) = "N"
         strain_mark(5) = ""
     End Sub
-
+    Public Function bid_name(ByVal a_bid As Integer) As String
+        If a_bid < 0 Then
+            bid_name = vbNullString
+        ElseIf a_bid = 0 Then
+            bid_name = "P"
+        ElseIf a_bid = 1 Then
+            bid_name = "X"
+        ElseIf a_bid = 2 Then
+            bid_name = "XX"
+        Else
+            bid_name = CStr(a_bid \ C_FIVE) & strain_mark(a_bid Mod C_FIVE)
+        End If
+    End Function
 
     Public Sub set_hand(BBA_NUMBER As String)
         str_number = Left$(BBA_NUMBER, 1)
@@ -117,6 +134,32 @@ Module ModuleBBA
             Next i
         Next j
     End Sub
+    Public Function bidding_body() As String
+        Dim int_bid As Integer, lp As Integer, note_index As Integer
+        Dim str_bid As String, str_bidding As String, note_text As String
+        note_text = vbNullString
+        str_bidding = vbNullString
+        For j = 0 To last_bid
+            '---licytacja
+            str_bid = arr_bids(j)
+            int_bid = Val(Left$(str_bid, 2))
+            str_bid = bid_name(int_bid)
 
-
+            If Len(str_bid) > 2 Then
+                note_index = note_index + 1
+                str_bid = str_bid & "*" & CStr(note_index)
+                note_text = note_text & vbCrLf & "*" & CStr(note_index) & " " & Mid$(str_bid, 4)
+            End If
+            If lp = 0 Or i = 0 Then
+                str_bidding = str_bidding & str_bid
+            Else
+                str_bidding = str_bidding & vbTab & str_bid
+            End If
+            If lp = 3 Then
+                str_bidding = str_bidding & vbCrLf
+            End If
+            lp = (lp + 1) Mod 4
+        Next j
+        bidding_body = str_bidding
+    End Function
 End Module
