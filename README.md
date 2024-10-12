@@ -15,6 +15,6 @@ The included .tlb files allow you to use COM.
 ## Links
 
 - [BBA - Bridge Bidding Analyser](https://sites.google.com/view/bbaenglish)
-- [Using the EPBot - Thorvald Aagaard](https://github.com/ThorvaldAagaard/Using-the-EPBot)
+- [Using the EPBot from python - Thorvald Aagaard](https://github.com/lorserker/ben/blob/main/src/bba/BBA.py)
 
 
