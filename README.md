@@ -1,5 +1,5 @@
-<h1>Using the EPBot</h1>
-<h2>The repository contains examples of how to use the functions implemented in the EPBot dll.</h2>
+<h1 style="text-align:center;>Using the EPBot</h1>
+<h2 style="text-align:center;>The repository contains examples of how to use the functions implemented in the EPBot dll.</h2>
 
 ## Features
 
