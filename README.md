@@ -1,5 +1,6 @@
 
 <h1>Using the EPBot</h1>
+<h3 style="text-align:center;">H3 that is center aligned</h3>
 <h3>The repository contains examples of how to use the functions implemented in the EPBot dll.</h3>
 
 ## Features
