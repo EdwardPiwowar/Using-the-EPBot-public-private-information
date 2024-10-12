@@ -45,7 +45,7 @@ Module ModuleBidding
                         current_bid = new_bid
                         current_double = 0
                         side = position Mod 2
-                        strain = current_bid Mod 5
+                        strain = current_bid Mod C_FIVE
                         If declarers(side, strain) = 0 Then
                             declarers(side, strain) = position + 1
                         End If
