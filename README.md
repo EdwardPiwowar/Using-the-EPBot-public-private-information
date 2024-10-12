@@ -1,5 +1,5 @@
-# Using the EPBot
-### _The repository contains examples of how to use the functions implemented in the EPBot dll._
+<h1>Using the EPBot</h1>
+<h2>_The repository contains examples of how to use the functions implemented in the EPBot dll._</h2>
 
 ## Features
 
