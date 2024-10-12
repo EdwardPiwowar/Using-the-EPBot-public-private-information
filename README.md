@@ -13,7 +13,7 @@ The included .tlb files allow you to use COM.
 
 ## Links
 
-[BBA - Bridge Bidding Analyser](https://sites.google.com/view/bbaenglish)
-[Using the EPBot - Thorvald Aagaard](https://github.com/ThorvaldAagaard/Using-the-EPBot)
+- [BBA - Bridge Bidding Analyser](https://sites.google.com/view/bbaenglish)
+- [Using the EPBot - Thorvald Aagaard](https://github.com/ThorvaldAagaard/Using-the-EPBot)
 
 
