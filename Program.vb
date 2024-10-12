@@ -33,17 +33,13 @@ Module Program
 
         '---example hand
         str_hand = "01BB8519F369D29DF04BA17EF45D"
-        Console.WriteLine("Enter another hand or skip")
+        Console.WriteLine("Enter another deal or skip")
         entered_hand = Console.ReadLine()
-        Console.WriteLine("Entered hand: " & str_hand)
-
+        Console.WriteLine("Entered deal: " & str_hand)
         If Len(entered_hand) = 28 Then
             str_hand = entered_hand
         End If
-
         set_hand(str_hand)
-
-        Console.WriteLine("")
         Console.WriteLine("Entered hands:")
         Console.WriteLine("")
 
@@ -78,6 +74,7 @@ Module Program
 
         bid()
         ''to do
+        Console.WriteLine("W" + vbTab + "N" + vbTab + "E" + vbTab + "S" + vbTab)
         Console.WriteLine(bidding_body)
 
         Console.WriteLine("")
@@ -93,17 +90,16 @@ Module Program
                 .new_hand(k, hand(k).suit, dealer, vulnerable)
                 ''set the entire auction
                 .set_arr_bids(arr_bids)
-                ''optional set dummy
+                ''optional set dummy (for play)
                 .set_dummy(dummy, hand(dummy).suit)
-                ''optional set leads
+                ''optional set previous leads (for play)
                 arr_leaders(0) = leader
-                ''arr_leads(0) = "TS"
+                ''arr_leads(0) = "TS" (for play)
                 .set_arr_leads(arr_leaders, arr_leads)
-                ''
+                ''obtain a bid based on the previous auction
                 new_bid = .get_bid
-                ''
+                ''obtain all hands
                 arr_suits = .get_arr_suits()
-
                 Console.WriteLine("")
                 For i = C_SPADES To C_CLUBS Step -1
                     Console.WriteLine(vbTab + arr_suits(i))

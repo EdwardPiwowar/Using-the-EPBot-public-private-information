@@ -2,14 +2,15 @@
 Imports System.Security.Cryptography.X509Certificates
 
 Module ModuleBidding
-    Public current_double As Integer, current_bid As Integer, leader As Integer, dummy As Integer, declarer As Integer
+    Public current_double As Integer, current_bid As Integer, leader As Integer, dummy As Integer, declarer As Integer, initial_pauses As Integer
     Public arr_bids() As String
     Public Sub bid()
         Dim meaning As String
-        Dim j As Integer, k As Integer, passes As Integer, position As Integer, bid_number As Integer, new_bid As Integer, side As Integer, strain As Integer
+        Dim k As Integer, passes As Integer, position As Integer, bid_number As Integer, new_bid As Integer, side As Integer, strain As Integer
         Dim alerting As Boolean
         Dim declarers(1, 4) As Integer
         position = dealer
+        initial_pauses = (dealer + 1) Mod 4
         For bid_number = 0 To UBound(arr_bids)
             With Player(position)
                 new_bid = .get_bid()
@@ -21,7 +22,7 @@ Module ModuleBidding
                 meaning = .info_meaning(position)
                 arr_bids(bid_number) = Format$(new_bid, "00")
                 If alerting Then
-                    '---zapis alertów
+                    '---alerts
                     arr_bids(bid_number) = arr_bids(bid_number) & "*" & meaning
                 End If
 

@@ -15,10 +15,10 @@ Module ModuleBBA
     Public Const C_EAST As Integer = 1
     Public Const C_SOUTH As Integer = 2
     Public Const C_WEST As Integer = 3
-    Public Const C_NONE As Integer = 0
-    Public Const C_NS As Integer = 2
-    Public Const C_WE As Integer = 1
-    Public Const C_BOTH As Integer = 3
+    Public Const V_NONE As Integer = 0
+    Public Const V_NS As Integer = 2
+    Public Const V_WE As Integer = 1
+    Public Const V_BOTH As Integer = 3
     Public Const C_FIVE As Integer = 5
     Public Const C_LONGER As String = "AKQJT98765432"
     Public Const C_INTERPRETED As Integer = 13
@@ -42,22 +42,22 @@ Module ModuleBBA
     Public hand() As TYPE_HAND
     Public Sub set_board()
         '---standard number of a board
-        board(C_NORTH, C_NONE) = 1
-        board(C_EAST, C_NS) = 2
-        board(C_SOUTH, C_WE) = 3
-        board(C_WEST, C_BOTH) = 4
-        board(C_NORTH, C_NS) = 5
-        board(C_EAST, C_WE) = 6
-        board(C_SOUTH, C_BOTH) = 7
-        board(C_WEST, C_NONE) = 8
-        board(C_NORTH, C_WE) = 9
-        board(C_EAST, C_BOTH) = 10
-        board(C_SOUTH, C_NONE) = 11
-        board(C_WEST, C_NS) = 12
-        board(C_NORTH, C_BOTH) = 13
-        board(C_EAST, C_NONE) = 14
-        board(C_SOUTH, C_NS) = 15
-        board(C_WEST, C_WE) = 16
+        board(C_NORTH, V_NONE) = 1
+        board(C_EAST, V_NS) = 2
+        board(C_SOUTH, V_WE) = 3
+        board(C_WEST, V_BOTH) = 4
+        board(C_NORTH, V_NS) = 5
+        board(C_EAST, V_WE) = 6
+        board(C_SOUTH, V_BOTH) = 7
+        board(C_WEST, V_NONE) = 8
+        board(C_NORTH, V_WE) = 9
+        board(C_EAST, V_BOTH) = 10
+        board(C_SOUTH, V_NONE) = 11
+        board(C_WEST, V_NS) = 12
+        board(C_NORTH, V_BOTH) = 13
+        board(C_EAST, V_NONE) = 14
+        board(C_SOUTH, V_NS) = 15
+        board(C_WEST, V_WE) = 16
     End Sub
     Public Sub set_dealers()
         Dim k As Integer
@@ -69,22 +69,22 @@ Module ModuleBBA
         Next k
     End Sub
     Public Sub set_vulnerability()
-        vulnerability(0) = C_NONE
-        vulnerability(1) = C_NS
-        vulnerability(2) = C_WE
-        vulnerability(3) = C_BOTH
-        vulnerability(4) = C_NS
-        vulnerability(5) = C_WE
-        vulnerability(6) = C_BOTH
-        vulnerability(7) = C_NONE
-        vulnerability(8) = C_WE
-        vulnerability(9) = C_BOTH
-        vulnerability(10) = C_NONE
-        vulnerability(11) = C_NS
-        vulnerability(12) = C_BOTH
-        vulnerability(13) = C_NONE
-        vulnerability(14) = C_NS
-        vulnerability(15) = C_WE
+        vulnerability(0) = V_NONE
+        vulnerability(1) = V_NS
+        vulnerability(2) = V_WE
+        vulnerability(3) = V_BOTH
+        vulnerability(4) = V_NS
+        vulnerability(5) = V_WE
+        vulnerability(6) = V_BOTH
+        vulnerability(7) = V_NONE
+        vulnerability(8) = V_WE
+        vulnerability(9) = V_BOTH
+        vulnerability(10) = V_NONE
+        vulnerability(11) = V_NS
+        vulnerability(12) = V_BOTH
+        vulnerability(13) = V_NONE
+        vulnerability(14) = V_NS
+        vulnerability(15) = V_WE
     End Sub
     Public Sub set_strain_mark()
         strain_mark(C_CLUBS) = "C"
@@ -138,8 +138,12 @@ Module ModuleBBA
         Dim str_bid As String, str_bidding As String, note_text As String
         note_text = vbNullString
         str_bidding = vbNullString
+        lp = initial_pauses
+        If initial_pauses > 0 Then
+            str_bidding = StrDup(initial_pauses, vbTab)
+        End If
         For j = 0 To last_bid
-            '---licytacja
+            '---bidding
             str_bid = arr_bids(j)
             int_bid = Val(Left$(str_bid, 2))
             str_bid = bid_name(int_bid)
@@ -149,7 +153,7 @@ Module ModuleBBA
                 str_bid = str_bid & "*" & CStr(note_index)
                 note_text = note_text & vbCrLf & "*" & CStr(note_index) & " " & Mid$(str_bid, 4)
             End If
-            If lp = 0 Or i = 0 Then
+            If lp = 0 Or j = 0 Then
                 str_bidding = str_bidding & str_bid
             Else
                 str_bidding = str_bidding & vbTab & str_bid
