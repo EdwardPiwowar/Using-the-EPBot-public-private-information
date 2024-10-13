@@ -7,7 +7,6 @@ Module Program
         Dim str_hand As String, entered_hand As String
         Dim suits()() As String
 
-
         Dim arr_leads() As String
         Dim arr_leaders() As Integer
         Dim arr_suits() As String
