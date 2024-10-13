@@ -6,6 +6,8 @@ Module ModuleBBA
     Private i As Integer, j As Integer, k As Integer, number As Integer, encryption_byte As Integer, board_extension As Integer
     Private str_card As String, str_number As String
     Public Const C_PASS As Integer = 0
+    Public Const C_DOUBLE As Integer = 1
+    Public Const C_REDOUBLE As Integer = 2
     Public Const C_CLUBS As Integer = 0
     Public Const C_DIAMONDS As Integer = 1
     Public Const C_HEARTS As Integer = 2
@@ -19,6 +21,11 @@ Module ModuleBBA
     Public Const V_NS As Integer = 2
     Public Const V_WE As Integer = 1
     Public Const V_BOTH As Integer = 3
+    Public Const T_21GF As Integer = 0
+    Public Const T_SAYC As Integer = 1
+    Public Const T_WJ As Integer = 2
+    Public Const T_PC As Integer = 3
+    Public Const T_ACOL As Integer = 4
     Public Const C_FIVE As Integer = 5
     Public Const C_LONGER As String = "AKQJT98765432"
     Public Const C_INTERPRETED As Integer = 13

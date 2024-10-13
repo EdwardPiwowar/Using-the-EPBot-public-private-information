@@ -4,12 +4,12 @@ Imports System.Runtime.CompilerServices
 Module Program
     Sub Main(args As String())
         Dim k As Integer, position As Integer, new_bid As Integer
-        Dim str_hand As String, entered_hand As String
+        Dim str_hand As String, entered_hand As String, meaning As String
         Dim suits()() As String
-
         Dim arr_leads() As String
         Dim arr_leaders() As Integer
         Dim arr_suits() As String
+        Dim info() As Integer
         ReDim hand(3)
         ReDim suits(3)
         ReDim arr_bids(63)
@@ -64,25 +64,25 @@ Module Program
             Player(k).new_hand(k, hand(k).suit, dealer, vulnerable)
             Player(k).scoring = 0
             ''examples for team 1 NS
-            Player(k).system_type(0) = 0
+            Player(k).system_type(0) = T_21GF
             Player(k).conventions(0, "Cue bid") = 1
             ''examples for team 2 WE
-            Player(k).system_type(1) = 0
+            Player(k).system_type(1) = T_21GF
             Player(k).conventions(1, "Cue bid") = 1
         Next k
 
         bid()
-        ''to do
+
         Console.WriteLine("W" + vbTab + "N" + vbTab + "E" + vbTab + "S" + vbTab)
         Console.WriteLine(bidding_body)
-
         Console.WriteLine("")
         Console.WriteLine("Declarer = " & CStr(declarer))
         Console.WriteLine("Leader = " & CStr(leader))
         Console.WriteLine("Dummy = " & CStr(dummy))
         Console.WriteLine("")
-        With Player(position)
-            For k = 0 To 3
+
+        For k = 0 To 3
+            With Player(k)
                 Console.WriteLine("")
                 Console.WriteLine("Player cards visible from position: " & CStr(k))
                 'set hand
@@ -112,8 +112,9 @@ Module Program
                     Console.WriteLine(vbTab + arr_suits(8 + i))
                 Next i
                 Console.WriteLine("")
-            Next k
-            Console.ReadKey()
-        End With
+            End With
+        Next k
+
+        Console.ReadKey()
     End Sub
 End Module
