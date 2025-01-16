@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 
 Module Program
     Sub Main(args As String())
-        Dim j As Integer, k As Integer, n As Integer, position As Integer, new_bid As Integer
+        Dim j As Integer, k As Integer, n As Integer, new_bid As Integer
         Dim str_hand As String, entered_hand As String
         Dim suits()() As String
         Dim arr_leads() As String
@@ -36,30 +36,28 @@ Module Program
         Console.WriteLine("Enter another deal or skip")
         entered_hand = Console.ReadLine()
         Console.WriteLine("Entered deal: " & str_hand)
+        Console.WriteLine("")
         set_hand(str_hand)
         vulnerable = 0
         deal = 1
-        For position = 0 To 2 Step 2
-            Console.WriteLine("")
 
-            dealer = (position + 1) Mod 4
-            For k = 0 To 3
-                n = (k + position) Mod 4
-                Player(k).new_hand(k, hand(n).suit, dealer, vulnerable)
-            Next k
-            Console.WriteLine("position = " & CStr(position))
-            Console.WriteLine("dealer = " & CStr(dealer))
+        For k = 0 To 3
+
+
+            dealer = (k + 0) Mod 4
+            For n = 0 To 3
+                Player(n).new_hand(n, hand((n + 4 - k) Mod 4).suit, dealer, vulnerable)
+            Next n
+            Console.WriteLine("Player cards visible from position: " & CStr(k) & " - dealer = " & CStr(dealer))
             bid()
+            'Console.WriteLine(Join(arr_bids, " "))
             Console.WriteLine("W" + vbTab + "N" + vbTab + "E" + vbTab + "S" + vbTab)
             Console.WriteLine(bidding_body)
-            Console.WriteLine("")
-            Console.WriteLine("Player cards visible from position: " & CStr(position))
 
-            k = position
-            n = (k + position) Mod 4
+
             With Player(k)
                 'set hand
-                .new_hand(k, hand(n).suit, dealer, vulnerable)
+                .new_hand(k, hand(0).suit, dealer, vulnerable)
                 ''set the entire auction
                 .set_arr_bids(arr_bids)
 
@@ -81,7 +79,7 @@ Module Program
                 Console.WriteLine("")
             End With
             Console.WriteLine("")
-        Next position
+        Next k
         Console.ReadKey()
         Console.WriteLine("")
     End Sub
