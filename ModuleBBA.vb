@@ -1,4 +1,5 @@
 ﻿Imports System.Diagnostics.Eventing
+Imports System.Reflection.Metadata.BlobBuilder
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices.JavaScript.JSType
 
@@ -115,30 +116,20 @@ Module ModuleBBA
         End If
     End Function
 
-    Public Sub set_hand(BBA_NUMBER As String)
-        str_number = Left$(BBA_NUMBER, 1)
-        board_extension = CLng("&H" & str_number)
-        str_number = Mid$(BBA_NUMBER, 2, 1)
-        number = CLng("&H" & str_number)
-        dealer = number \ 4
-        vulnerable = number Mod 4
-        deal = board_extension * 16 + board(dealer, vulnerable)
-        encryption_byte = board(dealer, vulnerable)
-        For j = 1 To 13
-            str_card = Mid$(C_LONGER, j, 1)
-            str_number = Mid$(BBA_NUMBER, 2 * j + 1, 2)
-            '---0-15
-            number = CLng("&H" & str_number)
-            number = encryption_byte Xor number
-            lbloki(0) = number Mod 4
-            lbloki(1) = (number \ 4) Mod 4
-            lbloki(2) = (number \ 16) Mod 4
-            lbloki(3) = number \ 64
+    Public Sub set_hand(str_deal As String)
+        Dim blocks() As String
+        Dim subblocks() As String
+
+
+        blocks = Split(str_deal, " ")
+        For k = 0 To 3
+            subblocks = Split(blocks(k), ".")
             For i = 0 To 3
-                k = lbloki(i)
-                hand(k).suit(i) = hand(k).suit(i) & str_card
+                hand(k).suit(i) = subblocks(3 - i)
             Next i
-        Next j
+        Next k
+
+
     End Sub
     Public Function bidding_body() As String
         Dim int_bid As Integer, lp As Integer, note_index As Integer
