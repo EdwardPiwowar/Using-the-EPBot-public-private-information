@@ -12,7 +12,6 @@ Module Program
         Dim info() As Integer
         ReDim hand(3)
         ReDim suits(3)
-        ReDim arr_bids(63)
         ReDim arr_leads(63)
         ReDim arr_leaders(51)
 
@@ -56,6 +55,9 @@ Module Program
 
 
             With Player(k)
+                'IMPORTANT - it is required to establish a system for both lines
+                .system_type(0) = T_21GF
+                .system_type(1) = T_21GF
                 'set hand
                 .new_hand(k, hand(0).suit, dealer, vulnerable)
                 ''set the entire auction
