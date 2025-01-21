@@ -46,8 +46,6 @@ Module Program
         deal = 1
 
         For k = 0 To 3
-
-
             dealer = (k + 0) Mod 4
             For n = 0 To 3
                 'IMPORTANT - it is required to establish a system for both lines
@@ -60,7 +58,6 @@ Module Program
             'Console.WriteLine(Join(arr_bids, " "))
             Console.WriteLine("W" + vbTab + "N" + vbTab + "E" + vbTab + "S" + vbTab)
             Console.WriteLine(bidding_body)
-
 
             With Player(k)
                 'IMPORTANT - it is required to establish a system for both lines
