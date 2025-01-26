@@ -9,7 +9,7 @@ Module Program
         Dim arr_leads() As String
         Dim arr_leaders() As Integer
         Dim arr_suits() As String
-        Dim info() As Integer
+        'Dim info() As Integer
         ReDim hand(3)
         ReDim suits(3)
         ReDim arr_bids(63)
