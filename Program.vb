@@ -42,11 +42,12 @@ Module Program
         deal = 1
 
         For k = 0 To 3
-
-
             dealer = (k + 0) Mod 4
             For n = 0 To 3
-                Player(n).new_hand(n, hand((n + 4 - k) Mod 4).suit, dealer, vulnerable)
+                'IMPORTANT - it is required to establish a system for both lines
+                Player(n).system_type(0) = T_21GF
+                Player(n).system_type(1) = T_21GF
+                Player(n).new_hand(n, hand((n - k + 4) Mod 4).suit, dealer, vulnerable)
             Next n
             Console.WriteLine("Player cards visible from position: " & CStr(k) & " - dealer = " & CStr(dealer))
             bid()
@@ -54,8 +55,10 @@ Module Program
             Console.WriteLine("W" + vbTab + "N" + vbTab + "E" + vbTab + "S" + vbTab)
             Console.WriteLine(bidding_body)
 
-
             With Player(k)
+                'IMPORTANT - it is required to establish a system for both lines
+                .system_type(0) = T_21GF
+                .system_type(1) = T_21GF
                 'set hand
                 .new_hand(k, hand(0).suit, dealer, vulnerable)
                 ''set the entire auction
