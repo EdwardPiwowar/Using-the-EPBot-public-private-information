@@ -9,6 +9,7 @@ Module ModuleBidding
         Dim k As Integer, passes As Integer, position As Integer, bid_number As Integer, new_bid As Integer, side As Integer, strain As Integer
         Dim alerting As Boolean
         Dim declarers(1, 4) As Integer
+        ReDim arr_bids(63)
         position = dealer
         initial_pauses = (dealer + 1) Mod 4
         For bid_number = 0 To UBound(arr_bids)

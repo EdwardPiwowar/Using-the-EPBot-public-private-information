@@ -12,7 +12,6 @@ Module Program
         'Dim info() As Integer
         ReDim hand(3)
         ReDim suits(3)
-        ReDim arr_bids(63)
         ReDim arr_leads(63)
         ReDim arr_leaders(51)
 
@@ -33,11 +32,16 @@ Module Program
         '---example hand
         str_hand = "53.532.K87.AT872 J82.T84.AQT54.KQ AKQT94.AKQJ9.J9. 76.76.632.J96543"
         Console.WriteLine("Current deal: " & str_hand)
-        Console.WriteLine("Enter another deal or skip")
-        entered_hand = Console.ReadLine()
-        Console.WriteLine("Entered deal: " & str_hand)
+        Do
+            Console.WriteLine("Enter another deal or skip")
+            entered_hand = Console.ReadLine()
+        Loop While Len(entered_hand) <> 0 And Len(entered_hand) <> 67
+        If entered_hand = vbNullString Then
+            entered_hand = str_hand
+        End If
+        Console.WriteLine("Entered deal: " & entered_hand)
         Console.WriteLine("")
-        set_hand(str_hand)
+        set_hand(entered_hand)
         vulnerable = 0
         deal = 1
 
