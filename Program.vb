@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 
 Module Program
     Sub Main(args As String())
-        Dim i As Long, j As Integer, k As Integer, n As Integer
+        Dim i As Long, j As Integer, k As Integer, n As Integer, asker As Integer, trump As Integer
         Dim str_hand As String
         Dim suits()() As String
         Dim arr_leads() As String
@@ -11,6 +11,7 @@ Module Program
         Dim info() As Integer
         Dim info_min() As Integer
         Dim info_max() As Integer
+        Dim honors() As Integer
         ReDim hand(3)
         ReDim suits(3)
         ReDim arr_leads(63)
@@ -46,20 +47,36 @@ Module Program
         arr_bids(6) = "01"
         arr_bids(7) = "20*Cue bid, a !C stopper"
         arr_bids(8) = "00"
-        arr_bids(9) = "24*Blackwood 0314, for !S"
+        arr_bids(9) = "24*Blackwood 1430, for !S"
         arr_bids(10) = "00"
-        arr_bids(11) = "25*A=0/5 or 3/5"
+        arr_bids(11) = "25"
         arr_bids(12) = "00"
-        arr_bids(13) = "33"
+        arr_bids(13) = "26"
         arr_bids(14) = "00"
-        arr_bids(15) = "00"
+        arr_bids(15) = "28"
         arr_bids(16) = "00"
+        arr_bids(17) = "33"
+        arr_bids(18) = "00"
+        arr_bids(19) = "00"
+        arr_bids(20) = "00"
+
+        'arr_bids(13) = "33"
+        'arr_bids(14) = "00"
+        'arr_bids(15) = "00"
+        'arr_bids(16) = "00"
 
         For k = 0 To 3
             With Player(k)
+                asker = -1
+                trump = C_NT
                 'IMPORTANT - it is required to establish a system for both lines
                 .system_type(0) = T_21GF
                 .system_type(1) = T_21GF
+                .conventions(0, "Blackwood 1430") = True
+                .conventions(1, "Blackwood 1430") = True
+                .conventions(0, "Blackwood without K And Q") = False
+                .conventions(1, "Blackwood without K And Q") = False
+
                 'set hand
                 '.new_hand(k, hand(k).suit, dealer, vulnerable)
                 ''set the entire auction
@@ -71,11 +88,28 @@ Module Program
                     Console.WriteLine("HCP " & info(402) & "-" & info(403))
                     info_min = .info_min_length(n)
                     info_max = .info_max_length(n)
-                    For i = 0 To 3
-                        Console.WriteLine("Length " & info_min(i) & "-" & info_max(i))
+                    For i = 3 To 0 Step -1
+                        Console.WriteLine("Length " & strain_mark(i) & " " & info_min(i) & "-" & info_max(i))
                     Next i
-                Next n
+                    If info(425) > 0 Then
+                        asker = n
+                        Console.WriteLine("asker=" & asker)
+                        trump = info(424)
+                        Console.WriteLine("trump=" & trump)
+                    End If
 
+                Next n
+                If asker >= 0 Then
+                    info = .info_feature((asker + 2) Mod 4)
+                    Console.WriteLine("A=" & info(406))
+                    Console.WriteLine("K=" & info(407))
+
+                    If trump <> 4 Then
+                        '-it doesn't work yet
+                        honors = .info_honors((asker + 2) Mod 4)
+                        Console.WriteLine("Q=" & (honors(trump) And 4) \ 4)
+                    End If
+                End If
 
                 Console.WriteLine("")
             End With
