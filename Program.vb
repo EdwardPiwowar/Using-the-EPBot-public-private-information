@@ -108,6 +108,8 @@ Module Program
                         honors = .info_honors((asker + 2) Mod 4)
                         Console.WriteLine("Q=" & (honors(trump) And 4) \ 4)
                     End If
+                    '-Next DLL 25 simple
+                    'Console.WriteLine("Q=" & info(319)) '-1 - no trump Q, 0 not set, 1 - trump Q 
                 End If
 
                 Console.WriteLine("")
