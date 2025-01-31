@@ -53,7 +53,7 @@ Module Program
         arr_bids(12) = "00"
         arr_bids(13) = "26"
         arr_bids(14) = "00"
-        arr_bids(15) = "28"
+        arr_bids(15) = "27"
         arr_bids(16) = "00"
         arr_bids(17) = "33"
         arr_bids(18) = "00"
@@ -105,7 +105,6 @@ Module Program
                     Console.WriteLine("K=" & info(407))
 
                     If trump <> 4 Then
-                        '-it doesn't work yet
                         honors = .info_honors((asker + 2) Mod 4)
                         Console.WriteLine("Q=" & (honors(trump) And 4) \ 4)
                     End If
