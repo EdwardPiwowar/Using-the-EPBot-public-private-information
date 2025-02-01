@@ -31,8 +31,6 @@ Module Program
         set_vulnerability()
         set_strain_mark()
 
-
-
         vulnerable = 3
         deal = 1
         dealer = 0
@@ -88,15 +86,23 @@ Module Program
                     Console.WriteLine("HCP " & info(402) & "-" & info(403))
                     info_min = .info_min_length(n)
                     info_max = .info_max_length(n)
+                    Console.WriteLine("Length")
                     For i = 3 To 0 Step -1
-                        Console.WriteLine("Length " & strain_mark(i) & " " & info_min(i) & "-" & info_max(i))
+                        Console.Write(strain_mark(i) & " " & info_min(i) & "-" & info_max(i) & vbTab)
                     Next i
+                    Console.WriteLine("")
                     If info(425) > 0 Then
                         asker = n
                         Console.WriteLine("asker=" & asker)
                         trump = info(424)
                         Console.WriteLine("trump=" & trump)
                     End If
+                    info = .info_stoppers(n)
+                    Console.WriteLine("Stoppers")
+                    For i = 3 To 0 Step -1
+                        Console.Write(strain_mark(i) & " " & info(i) & vbTab)
+                    Next i
+                    Console.WriteLine("")
 
                 Next n
                 If asker >= 0 Then
@@ -117,6 +123,5 @@ Module Program
             Console.WriteLine("")
         Next k
         Console.ReadKey()
-        Console.WriteLine("")
     End Sub
 End Module
