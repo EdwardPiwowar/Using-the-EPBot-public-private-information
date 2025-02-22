@@ -4,7 +4,7 @@ Imports System.Runtime.CompilerServices
 Module Program
     Sub Main(args As String())
         Dim i As Long, j As Integer, k As Integer, n As Integer, asker As Integer, trump As Integer
-        Dim str_hand As String
+        Dim str_hand As String, str_error As String
         Dim suits()() As String
         Dim arr_leads() As String
         Dim arr_leaders() As Integer
@@ -73,7 +73,12 @@ Module Program
             hand(k).suit(2) = "AK"
             hand(k).suit(1) = "AK6"
             hand(k).suit(0) = "A986"
-            .new_hand(k, hand(k).suit, dealer, vulnerable)
+            .new_hand(k + 7, hand(k).suit, dealer, vulnerable)
+            str_error = .LastError
+            If str_error <> "" Then
+                Console.WriteLine("Dll version " & .version & " Error " & str_error)
+                Exit Sub
+            End If
             ''set the entire auction
             .set_arr_bids(arr_bids)
 
@@ -106,12 +111,12 @@ Module Program
                 Console.WriteLine("A=" & info(406))
                 Console.WriteLine("K=" & info(407))
 
-                If trump <> 4 Then
-                    honors = .info_honors(n)
-                    Console.WriteLine("Q=" & (honors(trump) And 4) \ 4)
-                End If
+                'If trump <> 4 Then
+                'honors = .info_honors(n)
+                'Console.WriteLine("Q=" & (honors(trump) And 4) \ 4)
+                'End If
                 '-Next DLL 25 simple
-                'Console.WriteLine("Q=" & info(319)) '-1 - no trump Q, 0 not set, 1 - trump Q 
+                Console.WriteLine("Q=" & info(319)) '-1 - no trump Q, 0 not set, 1 - trump Q 
                 Console.WriteLine("")
             Next n
         End With
