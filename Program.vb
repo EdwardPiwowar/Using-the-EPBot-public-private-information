@@ -73,7 +73,7 @@ Module Program
             hand(k).suit(2) = "AK"
             hand(k).suit(1) = "AK6"
             hand(k).suit(0) = "A986"
-            .new_hand(k + 7, hand(k).suit, dealer, vulnerable)
+            .new_hand(k, hand(k).suit, dealer, vulnerable)
             str_error = .LastError
             If str_error <> "" Then
                 Console.WriteLine("Dll version " & .version & " Error " & str_error)
