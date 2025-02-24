@@ -79,7 +79,10 @@ Module Program
                 Console.WriteLine("Error " & str_error)
                 Exit Sub
             End If
-
+            Console.WriteLine("Position=" & .get_Position)
+            Console.WriteLine("Dealer=" & .get_Dealer)
+            Console.WriteLine("Vulnerability=" & .get_Vulnerability)
+            Console.WriteLine(.get_Cards)
             ''set the entire auction
             .set_arr_bids(arr_bids)
 
