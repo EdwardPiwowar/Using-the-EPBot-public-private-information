@@ -85,7 +85,8 @@ Module Program
             Console.WriteLine(.get_Cards)
             ''set the entire auction
             .set_arr_bids(arr_bids)
-
+            Console.WriteLine(.get_str_bidding)
+            Console.WriteLine("")
             For n = 2 To 7 Step 4
                 Console.WriteLine("Player " & k & " asks about position " & n)
                 info = .info_feature(n)
