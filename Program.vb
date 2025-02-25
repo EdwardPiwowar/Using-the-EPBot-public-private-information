@@ -11,7 +11,7 @@ Module Program
         Dim info() As Integer
         Dim info_min() As Integer
         Dim info_max() As Integer
-        Dim honors() As Integer
+        'Dim honors() As Integer
         ReDim hand(3)
         ReDim arr_leads(63)
         ReDim arr_leaders(51)
@@ -20,6 +20,7 @@ Module Program
             ReDim hand(k).suit(3)
         Next
         For k = 0 To 3
+            'Player(k) = New EPBot32.EPBot
             Player(k) = New EPBot86.EPBot
             'Player(k) = New EPBot64.EPBot
             'Player(k) = New EPBotARM64.EPBot

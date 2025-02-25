@@ -42,8 +42,9 @@ Module ModuleBBA
     Private lbloki(3) As Integer
     ''EPBot is a namespace 
     Public Player(3) As EPBot86.EPBot
-    ''Dim Player(3) As EPBot64.EPBot
-    ''Dim Player(3) As EPBotARM64.EPBot
+    ''Public Player(3) As EPBot64.EPBot
+    ''Public Player(3) As EPBotARM64.EPBot
+    ''Public Player(3) As EPBot32.EPBot
     Public Structure TYPE_HAND
         Dim suit() As String
     End Structure
